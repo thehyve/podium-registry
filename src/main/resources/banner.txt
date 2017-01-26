@@ -1,0 +1,8 @@
+${AnsiColor.BLACK}  ██████╗ ██████╗ ███╗   ███╗██████╗ ██╗ ${AnsiColor.BRIGHT_BLUE} ██████╗  ██████╗ ██████╗ ██╗██╗   ██╗███╗   ███╗
+${AnsiColor.BLACK}  ██╔══██╗██╔══██╗████╗ ████║██╔══██╗██║ ${AnsiColor.BRIGHT_BLUE} ██╔══██╗██╔═══██╗██╔══██╗██║██║   ██║████╗ ████║
+${AnsiColor.BLACK}  ██████╔╝██████╔╝██╔████╔██║██████╔╝██║ ${AnsiColor.BRIGHT_BLUE} ██████╔╝██║   ██║██║  ██║██║██║   ██║██╔████╔██║
+${AnsiColor.BLACK}  ██╔══██╗██╔══██╗██║╚██╔╝██║██╔══██╗██║ ${AnsiColor.BRIGHT_BLUE} ██╔═══╝ ██║   ██║██║  ██║██║██║   ██║██║╚██╔╝██║
+${AnsiColor.BLACK}  ██████╔╝██████╔╝██║ ╚═╝ ██║██║  ██║██║ ${AnsiColor.BRIGHT_BLUE} ██║     ╚██████╔╝██████╔╝██║╚██████╔╝██║ ╚═╝ ██║
+${AnsiColor.BLACK}  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝ ${AnsiColor.BRIGHT_BLUE} ╚═╝      ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝ ╚═╝     ╚═╝
+
+${AnsiColor.BRIGHT_BLUE}:: Podium Registry :: Running Spring Boot ${spring-boot.version} ::

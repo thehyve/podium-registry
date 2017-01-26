@@ -1,0 +1,14 @@
+# ===================================================================
+# Podium Sample Spring Cloud Config.
+# ===================================================================
+
+# Property used on app startup to check the config server status
+configserver:
+    name: Podium Registry config server
+    status: Connected to the Podium Registry config server!
+
+podium:
+    security:
+        authentication:
+            jwt:
+                secret: change-me-in-production
