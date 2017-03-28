@@ -14,7 +14,7 @@ eureka:
     env: prod
     instance:
         hostname: localhost
-        appname: registry
+        appname: podiumRegistry
         prefer-ip-address: true
     server:
         enable-self-preservation: false
@@ -66,14 +66,9 @@ spring:
     cloud:
         config:
             server:
-                native:
-                    search-locations: file:./central-config
                 git:
                     # sample prod config using the central-directory folder in the podium-registry github repos
-                    uri: https://github.com/thehyve/bbmri-podium-registry/
-                    search-paths: central-config
                 prefix: /config
-
     thymeleaf:
         cache: true
 

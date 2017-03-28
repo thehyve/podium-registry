@@ -33,12 +33,15 @@ management:
 
 spring:
     application:
-        name: podium-registry
+        name: podiumRegistry
     mvc:
         favicon:
             enabled: false
     thymeleaf:
         mode: XHTML
+logging:
+  level: info
+
 
 
 

@@ -14,7 +14,7 @@ eureka:
     env: dev
     instance:
         hostname: localhost
-        appname: registry
+        appname: podiumRegistry
         prefer-ip-address: true
     server:
         enable-self-preservation: false
@@ -32,7 +32,7 @@ podium:
                 # Token is valid 24 hours
                 tokenValidityInSeconds: 86400
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
-        jmx.enabled: true
+        jmx.enabled: false
         spark:
             enabled: false
             host: localhost
