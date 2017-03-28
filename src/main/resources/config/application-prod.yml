@@ -68,7 +68,13 @@ spring:
             server:
                 git:
                     # sample prod config using the central-directory folder in the podium-registry github repos
+                    #uri: git@github.com:thehyve/bbmri-podium-config.git
+                    uri: https://github.com/thehyve/bbmri-podium-config
+                    searchPaths: '{application}'
+                    username: # set via spring.cloud.server.git.username env var
+                    password:
                 prefix: /config
+            name: podiumRegistry
     thymeleaf:
         cache: true
 
