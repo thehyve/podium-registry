@@ -1,16 +1,18 @@
 package org.bbmri.podium.registry.config;
+import java.net.InetSocketAddress;
 
 import ch.qos.logback.classic.AsyncAppender;
+import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
-import net.logstash.logback.appender.LogstashSocketAppender;
+import ch.qos.logback.classic.spi.LoggerContextListener;
+import ch.qos.logback.core.spi.ContextAwareBase;
+import net.logstash.logback.appender.LogstashTcpSocketAppender;
+import net.logstash.logback.encoder.LogstashEncoder;
 import net.logstash.logback.stacktrace.ShortenedThrowableConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 
 @Configuration
 public class LoggingConfiguration {
@@ -19,45 +21,53 @@ public class LoggingConfiguration {
 
     private LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
 
-    @Value("${spring.application.name}")
-    private String appName;
+    private final String appName;
 
-    @Value("${server.port}")
-    private String serverPort;
+    private final String serverPort;
 
-    @Value("${eureka.instance.instanceId: 0}")
-    private String instanceId;
+    private final String instanceId;
 
-    @Inject
-    private PodiumProperties podiumProperties;
+    private final PodiumProperties podiumProperties;
 
-    @PostConstruct
-    private void init() {
+    public LoggingConfiguration(@Value("${spring.application.name}") String appName, @Value("${server.port}") String serverPort,
+                                @Value("${eureka.instance.instanceId: 'podiumRegistry'}") String instanceId, PodiumProperties podiumProperties) {
+        this.podiumProperties = podiumProperties;
+        this.appName = appName;
+        this.serverPort = serverPort;
+        this.instanceId = instanceId;
+
         if (podiumProperties.getLogging().getLogstash().isEnabled()) {
-            addLogstashAppender();
+            addLogstashAppender(context);
+
+            // Add context listener
+            LogbackLoggerContextListener loggerContextListener = new LogbackLoggerContextListener();
+            loggerContextListener.setContext(context);
+            context.addListener(loggerContextListener);
         }
     }
 
-    public void addLogstashAppender() {
+    public void addLogstashAppender(LoggerContext context) {
         log.info("Initializing Logstash logging");
 
-        LogstashSocketAppender logstashAppender = new LogstashSocketAppender();
+        LogstashTcpSocketAppender logstashAppender = new LogstashTcpSocketAppender();
         logstashAppender.setName("LOGSTASH");
         logstashAppender.setContext(context);
         String customFields = "{\"app_name\":\"" + appName + "\",\"app_port\":\"" + serverPort + "\"," +
             "\"instance_id\":\"" + instanceId + "\"}";
 
-        // Set the Logstash appender config from Podium properties
-        logstashAppender.setSyslogHost(podiumProperties.getLogging().getLogstash().getHost());
-        logstashAppender.setPort(podiumProperties.getLogging().getLogstash().getPort());
-        logstashAppender.setCustomFields(customFields);
+        // More documentation is available at: https://github.com/logstash/logstash-logback-encoder
+        LogstashEncoder logstashEncoder=new LogstashEncoder();
+        // Set the Logstash appender config from JHipster properties
+        logstashEncoder.setCustomFields(customFields);
+        // Set the Logstash appender config from JHipster properties
+        logstashAppender.addDestinations(new InetSocketAddress(podiumProperties.getLogging().getLogstash().getHost(), podiumProperties.getLogging().getLogstash().getPort()));
 
-        // Limit the maximum length of the forwarded stacktrace so that it won't exceed the 8KB UDP limit of logstash
         ShortenedThrowableConverter throwableConverter = new ShortenedThrowableConverter();
-        throwableConverter.setMaxLength(7500);
         throwableConverter.setRootCauseFirst(true);
-        logstashAppender.setThrowableConverter(throwableConverter);
+        logstashEncoder.setThrowableConverter(throwableConverter);
+        logstashEncoder.setCustomFields(customFields);
 
+        logstashAppender.setEncoder(logstashEncoder);
         logstashAppender.start();
 
         // Wrap the appender in an Async appender for performance
@@ -70,4 +80,38 @@ public class LoggingConfiguration {
 
         context.getLogger("ROOT").addAppender(asyncLogstashAppender);
     }
+
+    /**
+     * Logback configuration is achieved by configuration file and API.
+     * When configuration file change is detected, the configuration is reset.
+     * This listener ensures that the programmatic configuration is also re-applied after reset.
+     */
+    class LogbackLoggerContextListener extends ContextAwareBase implements LoggerContextListener {
+
+        @Override
+        public boolean isResetResistant() {
+            return true;
+        }
+
+        @Override
+        public void onStart(LoggerContext context) {
+            addLogstashAppender(context);
+        }
+
+        @Override
+        public void onReset(LoggerContext context) {
+            addLogstashAppender(context);
+        }
+
+        @Override
+        public void onStop(LoggerContext context) {
+            // Nothing to do.
+        }
+
+        @Override
+        public void onLevelChange(ch.qos.logback.classic.Logger logger, Level level) {
+            // Nothing to do.
+        }
+    }
+
 }
