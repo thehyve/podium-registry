@@ -9,7 +9,7 @@
         <relativePath />
     </parent>
 
-    <groupId>org.bbmri.podium</groupId>
+    <groupId>nl.thehyve.podium</groupId>
     <artifactId>podium-registry</artifactId>
     <version>1.0.1</version>
     <packaging>war</packaging>
@@ -19,6 +19,19 @@
     <prerequisites>
         <maven>3.0.0</maven>
     </prerequisites>
+
+    <distributionManagement>
+        <repository>
+            <id>nl.thehyve.nexus</id>
+            <name>The Hyve - Nexus repository</name>
+            <url>https://repo.thehyve.nl/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nl.thehyve.nexus</id>
+            <name>The Hyve - Nexus repository</name>
+            <url>https://repo.thehyve.nl/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <properties>
         <java.version>1.8</java.version>
