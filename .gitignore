@@ -3,6 +3,7 @@
 ######################
 /target/www/**
 /src/main/webapp/bower_components/**
+/src/main/webapp/app/app.constants.js
 
 ######################
 # Node

@@ -67,12 +67,11 @@ spring:
         config:
             server:
                 git:
-                    # sample prod config using the central-directory folder in the podium-registry github repos
-                    #uri: git@github.com:thehyve/bbmri-podium-config.git
-                    uri: https://github.com/thehyve/bbmri-podium-config
+                    # prod config using the bbmri-podium-config github repository.
+                    # ssh keys with access to the (private) repository need to be present
+                    # in ~/.ssh.
+                    uri: git@github.com:thehyve/bbmri-podium-config.git
                     searchPaths: '{application}'
-                    username: # set via spring.cloud.server.git.username env var
-                    password:
                 prefix: /config
             name: podiumRegistry
     thymeleaf:
