@@ -56,24 +56,11 @@ podium:
             # edit spring.metrics.export.delay-millis to set report frequency
 
 spring:
-    profiles:
-        active: prod
     devtools:
         restart:
             enabled: false
         livereload:
             enabled: false
-    cloud:
-        config:
-            server:
-                git:
-                    # prod config using the bbmri-podium-config github repository.
-                    # ssh keys with access to the (private) repository need to be present
-                    # in ~/.ssh.
-                    uri: git@github.com:thehyve/bbmri-podium-config.git
-                    searchPaths: '{application}'
-                prefix: /config
-            name: podiumRegistry
     thymeleaf:
         cache: true
 

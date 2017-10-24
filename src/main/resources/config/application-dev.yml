@@ -58,18 +58,12 @@ podium:
 spring:
     profiles:
         active: dev
-        include: native
+        include: swagger
     devtools:
         restart:
             enabled: true
         livereload:
             enabled: false # we use gulp + BrowserSync for livereload
-    cloud:
-        config:
-            server:
-                native:
-                    search-locations: file:./central-config
-                prefix: /config
     thymeleaf:
         cache: false
 

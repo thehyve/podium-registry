@@ -1,0 +1,32 @@
+# ===================================================================
+# Spring Cloud Config bootstrap configuration for the "dev" profile
+# In prod profile, properties will be overwriten by the ones defined in bootstrap-prod.yml
+# ===================================================================
+
+spring:
+    application:
+        name: podiumRegistry
+    profiles:
+        active: prod,git
+    cloud:
+        config:
+            server:
+                git:
+                    # prod config using the bbmri-podium-config github repository.
+                    # ssh keys with access to the (private) repository need to be present
+                    # in ~/.ssh.
+                    uri: git@github.com:thehyve/bbmri-podium-config.git
+                native:
+                    search-locations: file:./central-config
+                prefix: /config
+                bootstrap: true
+            fail-fast: true
+            # name of the config server's property source (file.yml) that we want to use
+            name: podiumRegistry
+            profile: prod # profile(s) of the property source
+            label: master # toggle to switch to a different version of the configuration as stored in git
+            # it can be set to any label, branch or commit of the config source git repository
+
+info:
+    project:
+        version: #project.version#

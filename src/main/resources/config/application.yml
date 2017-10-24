@@ -39,10 +39,6 @@ spring:
             enabled: false
     thymeleaf:
         mode: XHTML
+
 logging:
-  level: info
-
-
-
-
-
+    level: info
