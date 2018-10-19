@@ -28,7 +28,6 @@ podium:
     security:
         authentication:
             jwt:
-                secret: d6877ac45344bb624472a12dd83bb6b3b7e63113
                 # Token is valid 24 hours
                 tokenValidityInSeconds: 86400
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
@@ -67,7 +66,7 @@ spring:
 security:
     user:
         name: admin
-        password: admin
+#        password: change me in production
         role: USER,ADMIN
 
 server:
