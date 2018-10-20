@@ -11,7 +11,7 @@
 
     <groupId>nl.thehyve.podium</groupId>
     <artifactId>podium-registry</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
     <packaging>war</packaging>
     <name>Podium Registry</name>
     <description>Podium service registry, made with Netflix Eureka and Spring Cloud Config</description>
