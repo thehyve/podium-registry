@@ -9,7 +9,7 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     eslint = require('gulp-eslint'),
     argv = require('yargs').argv,
-    gutil = require('gulp-util'),
+    log = require('fancy-log'),
     protractor = require('gulp-protractor').protractor,
     es = require('event-stream'),
     flatten = require('gulp-flatten'),
@@ -220,7 +220,7 @@ gulp.task('protractor', function () {
         .pipe(plumber({errorHandler: handleErrors}))
         .pipe(protractor(configObj))
         .on('error', function () {
-            gutil.log('E2E Tests failed');
+            log.error('E2E Tests failed');
             process.exit(1);
         });
 });
