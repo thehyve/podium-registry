@@ -1,5 +1,5 @@
 {
-  "version": "0.0.3",
+  "version": "1.0.4",
   "name": "podium-registry",
   "appPath": "src/main/webapp/",
   "testPath": "src/test/javascript/spec",
