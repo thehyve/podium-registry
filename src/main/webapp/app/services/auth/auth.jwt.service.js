@@ -35,10 +35,11 @@
                 password: credentials.password,
                 rememberMe: credentials.rememberMe
               };
-            return $http.post('api/authenticate', data).success(authenticateSuccess);
+            return $http.post('api/authenticate', data).then(authenticateSuccess);
 
 
-            function authenticateSuccess (data, status, headers) {
+            function authenticateSuccess (response) {
+                var headers = response.headers;
                 var bearerToken = headers('Authorization');
                 if (angular.isDefined(bearerToken) && bearerToken.slice(0, 7) === 'Bearer ') {
                     var jwt = bearerToken.slice(7, bearerToken.length);
